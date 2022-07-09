@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<br class="mt-0 mb-4">
+<div class="container">
+    <div class="bg-codeblocks">
+        <div class="main-box-codeblocks">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="{% url 'home' %}"><button class="btn btn-info mb-4">Back Home</button></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box-image-codeblocks">
+                            <div class="swiper-container gallery-top">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="product-image">
+                                            <img src="{{recipe.image.url}}" alt="{{recipe.name}}" class="img-fluid" style="width: 650px; height: 100%;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="text-bold text-strong">{{ recipe.name|capfirst }} Recipe  {% if user.is_authenticated and request.user == recipe.author %}   <a href="{% url 'update' recipe.id %}"><i class="fas fa-edit"></i></a> <span data-bs-toggle="modal" data-bs-target="#delete"><i class="fas fa-trash"></i></span> {% endif %}</h2>
+                        <span class="seller-name-codeblocks">
+                            <h5>by <a href="#" style="text-decoration: none;">{{recipe.author}}</a></h5>
+                        </span>
+                        <br>
+                        <span class="description-codeblocks">
+                            <p>
+                                <strong>Description:</strong> <br>
+                                <span class="text-muted">
+                                    <p style="width: 450px;overflow:scroll;">{{recipe.description}}</p>
+                                </span>
+                            </p>
+                        </span>
+                        <br>
+                        <span class="extras-codeblocks ">
+                            <ul class="nav nav-tabs my-2" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Quick Info</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="ingredients-tab" data-toggle="tab" href="#ingredients" role="tab" aria-controls="ingredients" aria-selected="false">Ingredients</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="directions-tab" data-toggle="tab" href="#directions" role="tab" aria-controls="directions" aria-selected="false">Directions</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <br>
+                                    <table style="width:250px;">
+                                        <tr>
+                                            <th>Servings:</th>
+                                            <td>{{ recipe.servings }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Prep:</th>
+                                            <td>{{ recipe.prep }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Cook:</th>
+                                            <td>{{ recipe.cook }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
+                                    {{ recipe.ingredients|safe }}
+                                </div>
+                                <div class="tab-pane fade" id="directions" role="tabpanel" aria-labelledby="directions-tab">
+                                    {{ recipe.directions|safe }}
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+      
+<!-- Modal -->
+<div class="modal fade" id="delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="deleteLabel">Are you 100% sure?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you absolutely sure you want to delete the {{recipe.name|capfirst}} Recipe? The data will be erased from the database and will not be retrievable.
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nevermind</button>
+            <a href="{% url 'delete' recipe.id %}"><button type="button" class="btn btn-primary">OK, Proceed</button></a>
+        </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.bg-codeblocks {
+    margin-top: 4%;
+    position: absolute;
+    background: #F2EFE8;
+    background: #F2EFE8 important!;
+    background: #F2EFE8 important!;
+    height: auto;
+    border-radius: 20px;
+}
+
+.main-box-codeblocks	{
+	background-color: #FAFAFA;
+	border-radius: 20px;
+	padding: 5em 2em;
+	width:90%;
+	height: auto;
+	position: relative;
+	display: block;
+	box-shadow: 0 0px 20px 2px rgba(0,0,0,0.5);
+	margin: 3em auto;
+	
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+{% endblock %}   
