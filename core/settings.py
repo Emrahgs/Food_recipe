@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-li+q!&cy5*3t8lw2bp*24r@*2-$6d&ff#$lx81go#u8xu9fi3q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'food-recipes.herokuapp.com']
 
 
 # Application definition
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -88,11 +89,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'food_stories',
-        'USER': 'food2',
-        'PASSWORD': 12345,
-        'HOST': 'localhost',
-        'PORT': 5433,
+        'NAME': 'd3vf06ck7t1elf',
+        'USER': 'esnfwjzzocjftt',
+        'PASSWORD': '2c0540da49d7fb6c98d42c677996db956f3044c72a7c7ba99284b7ffd68f3b7d',
+        'HOST': 'ec2-34-247-72-29.eu-west-1.compute.amazonaws.com',
+        'PORT': 5432,
     }
 }
 
@@ -138,6 +139,8 @@ STATIC_TMP = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 os.makedirs(STATIC_TMP, exist_ok=True)
